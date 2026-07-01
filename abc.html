@@ -8,69 +8,27 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
   :root {
-    --bg-deep: #0A0E1A;
-    --bg-surface: #111827;
-    --bg-card: #1A2236;
-    --bg-input: #0F1629;
-    --border: #1F2B45;
-    --border-focus: #D97706;
-    --fg: #F1F5F9;
-    --fg-muted: #64748B;
-    --fg-dim: #475569;
-    --accent: #F59E0B;
-    --accent-glow: rgba(245, 158, 11, 0.25);
-    --accent-soft: rgba(245, 158, 11, 0.08);
-    --danger: #EF4444;
-    --success: #22C55E;
-    --radius: 16px;
-    --radius-sm: 10px;
-    --radius-full: 999px;
+    --bg-deep: #0A0E1A; --bg-surface: #111827; --bg-card: #1A2236; --bg-input: #0F1629;
+    --border: #1F2B45; --border-focus: #D97706; --fg: #F1F5F9; --fg-muted: #64748B;
+    --fg-dim: #475569; --accent: #F59E0B; --accent-glow: rgba(245, 158, 11, 0.25);
+    --accent-soft: rgba(245, 158, 11, 0.08); --danger: #EF4444; --success: #22C55E;
+    --radius: 16px; --radius-sm: 10px; --radius-full: 999px;
     --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'DM Sans', sans-serif; background: #050810; color: var(--fg); min-height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+  .phone-frame { width: 100%; max-width: 420px; height: 100vh; max-height: 900px; background: var(--bg-deep); position: relative; overflow: hidden; box-shadow: 0 0 80px rgba(245, 158, 11, 0.06), 0 0 0 1px rgba(255,255,255,0.04); }
+  @media (min-width: 500px) { .phone-frame { border-radius: 40px; height: 860px; border: 1px solid rgba(255,255,255,0.06); } }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: #050810;
-    color: var(--fg);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-  }
-
-  .phone-frame {
-    width: 100%; max-width: 420px; height: 100vh; max-height: 900px;
-    background: var(--bg-deep); position: relative; overflow: hidden;
-    box-shadow: 0 0 80px rgba(245, 158, 11, 0.06), 0 0 0 1px rgba(255,255,255,0.04);
-  }
-  @media (min-width: 500px) {
-    .phone-frame { border-radius: 40px; height: 860px; border: 1px solid rgba(255,255,255,0.06); }
-  }
-
-  .ambient {
-    position: absolute; top: -40%; left: -20%; width: 140%; height: 80%;
-    pointer-events: none; z-index: 0; opacity: 0.5; transition: opacity 0.8s ease;
-  }
+  .ambient { position: absolute; top: -40%; left: -20%; width: 140%; height: 80%; pointer-events: none; z-index: 0; opacity: 0.5; transition: opacity 0.8s ease; }
   .ambient .orb { position: absolute; border-radius: 50%; filter: blur(80px); animation: orbFloat 12s ease-in-out infinite alternate; }
   .ambient .orb-1 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(245,158,11,0.15), transparent 70%); top: 10%; left: 10%; }
   .ambient .orb-2 { width: 250px; height: 250px; background: radial-gradient(circle, rgba(217,119,6,0.1), transparent 70%); top: 30%; right: -5%; animation-delay: -4s; animation-duration: 15s; }
   .ambient .orb-3 { width: 200px; height: 200px; background: radial-gradient(circle, rgba(251,191,36,0.08), transparent 70%); bottom: 10%; left: 20%; animation-delay: -8s; animation-duration: 18s; }
-  @keyframes orbFloat {
-    0% { transform: translate(0, 0) scale(1); } 33% { transform: translate(15px, -20px) scale(1.05); }
-    66% { transform: translate(-10px, 10px) scale(0.95); } 100% { transform: translate(20px, -10px) scale(1.02); }
-  }
+  @keyframes orbFloat { 0% { transform: translate(0, 0) scale(1); } 33% { transform: translate(15px, -20px) scale(1.05); } 66% { transform: translate(-10px, 10px) scale(0.95); } 100% { transform: translate(20px, -10px) scale(1.02); } }
 
   .screens { position: relative; width: 100%; height: 100%; z-index: 1; }
-  .screen {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    display: flex; flex-direction: column; padding: 0 24px; opacity: 0;
-    transform: translateX(60px); pointer-events: none;
-    transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow-y: auto; -webkit-overflow-scrolling: touch;
-  }
+  .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; padding: 0 24px; opacity: 0; transform: translateX(60px); pointer-events: none; transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); overflow-y: auto; }
   .screen::-webkit-scrollbar { display: none; }
   .screen.active { opacity: 1; transform: translateX(0); pointer-events: all; }
   .screen.exit-left { opacity: 0; transform: translateX(-60px); }
@@ -78,8 +36,7 @@
   .status-bar { display: flex; justify-content: space-between; align-items: center; padding: 16px 4px 8px; font-size: 13px; font-weight: 500; color: var(--fg-muted); flex-shrink: 0; }
   .status-bar .time { font-weight: 700; color: var(--fg); font-size: 14px; }
   .status-icons { display: flex; gap: 6px; font-size: 12px; }
-
-  .progress-dots { display: flex; gap: 8px; justify-content: center; padding: 8px 0 20px; flex-shrink: 0; }
+  .progress-dots { display: flex; gap: 8px; justify-content: center; padding: 8px 0 12px; flex-shrink: 0; }
   .dot { width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--border); transition: var(--transition); }
   .dot.active { width: 28px; background: var(--accent); box-shadow: 0 0 12px var(--accent-glow); }
 
@@ -88,161 +45,114 @@
   .screen-title { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; line-height: 1.15; color: var(--fg); }
   .screen-subtitle { font-size: 14px; color: var(--fg-muted); margin-top: 6px; line-height: 1.5; }
 
-  .form-group { margin-top: 24px; flex-shrink: 0; }
-  .form-label { display: block; font-size: 13px; font-weight: 500; color: var(--fg-muted); margin-bottom: 10px; letter-spacing: 0.3px; }
+  .form-group { margin-top: 24px; flex-shrink: 0; opacity: 0; transform: translateY(12px); animation: fadeUp 0.5s ease forwards; }
+  .form-group:nth-child(1) { animation-delay: 0.15s; } .form-group:nth-child(2) { animation-delay: 0.25s; } .form-group:nth-child(3) { animation-delay: 0.35s; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  
+  .form-label { display: block; font-size: 13px; font-weight: 500; color: var(--fg-muted); margin-bottom: 10px; }
   .input-wrap { position: relative; }
   .input-wrap i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--fg-dim); font-size: 15px; transition: color var(--transition); pointer-events: none; }
   .text-input { width: 100%; background: var(--bg-input); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px 16px 16px 46px; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--fg); outline: none; transition: var(--transition); }
   .text-input::placeholder { color: var(--fg-dim); }
-  .text-input:focus { border-color: var(--border-focus); box-shadow: 0 0 0 3px var(--accent-glow), 0 4px 20px rgba(0,0,0,0.3); }
+  .text-input:focus { border-color: var(--border-focus); box-shadow: 0 0 0 3px var(--accent-glow); }
   .text-input:focus + i, .text-input:focus ~ i { color: var(--accent); }
 
   .gender-toggle { display: flex; background: var(--bg-input); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 4px; position: relative; overflow: hidden; }
   .gender-option { flex: 1; padding: 14px 0; text-align: center; font-size: 14px; font-weight: 500; color: var(--fg-dim); cursor: pointer; position: relative; z-index: 1; transition: color var(--transition); display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 12px; user-select: none; }
-  .gender-option i { font-size: 15px; }
   .gender-option.active { color: var(--bg-deep); font-weight: 700; }
   .gender-slider { position: absolute; top: 4px; left: 4px; width: calc(50% - 4px); height: calc(100% - 8px); background: var(--accent); border-radius: 12px; transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 2px 12px var(--accent-glow); }
   .gender-slider.right { transform: translateX(100%); }
 
-  .time-picker-card { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 20px; padding: 28px 20px; text-align: center; position: relative; overflow: hidden; }
+  .time-picker-card { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 20px; padding: 24px 20px; text-align: center; position: relative; overflow: hidden; }
   .time-picker-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--accent-glow), transparent); }
-  .time-display { font-family: 'Space Grotesk', sans-serif; font-size: 72px; font-weight: 700; color: var(--fg); letter-spacing: -2px; line-height: 1; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 4px; }
+  .time-display { font-family: 'Space Grotesk', sans-serif; font-size: 64px; font-weight: 700; color: var(--fg); letter-spacing: -2px; line-height: 1; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 4px; }
   .time-display .colon { animation: colonBlink 1.5s ease-in-out infinite; color: var(--accent); font-weight: 300; }
   @keyframes colonBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
   .time-ampm { font-size: 16px; font-weight: 500; color: var(--accent); background: var(--accent-soft); padding: 4px 12px; border-radius: var(--radius-full); display: inline-block; margin-top: 4px; }
-  .time-controls { display: flex; justify-content: center; gap: 40px; margin-top: 20px; }
+  .time-controls { display: flex; justify-content: center; gap: 30px; margin-top: 16px; }
   .time-col { display: flex; flex-direction: column; align-items: center; gap: 8px; }
   .time-col-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--fg-dim); font-weight: 500; }
-  .time-btn { width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--border); background: var(--bg-input); color: var(--fg-muted); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+  .time-btn { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--border); background: var(--bg-input); color: var(--fg-muted); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
   .time-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); transform: scale(1.08); }
   .time-btn:active { transform: scale(0.95); }
 
-  .text-area { width: 100%; background: var(--bg-input); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--fg); outline: none; resize: none; min-height: 100px; line-height: 1.6; transition: var(--transition); }
+  .text-area { width: 100%; background: var(--bg-input); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--fg); outline: none; resize: none; min-height: 90px; line-height: 1.6; transition: var(--transition); }
   .text-area::placeholder { color: var(--fg-dim); }
   .text-area:focus { border-color: var(--border-focus); box-shadow: 0 0 0 3px var(--accent-glow); }
   .char-count { text-align: right; font-size: 12px; color: var(--fg-dim); margin-top: 6px; }
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 20px 0; }
+  .info-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--accent-soft); border: 1px solid rgba(245,158,11,0.15); border-radius: var(--radius-full); padding: 8px 14px; font-size: 12px; color: var(--accent); margin-top: 16px; }
 
-  .btn-primary { width: 100%; padding: 18px; border: none; border-radius: var(--radius); background: linear-gradient(135deg, #F59E0B, #D97706); color: #0A0E1A; font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; letter-spacing: 0.3px; }
-  .btn-primary::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); transition: left 0.5s ease; }
-  .btn-primary:hover::after { left: 100%; }
+  .btn-primary { width: 100%; padding: 18px; border: none; border-radius: var(--radius); background: linear-gradient(135deg, #F59E0B, #D97706); color: #0A0E1A; font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; }
   .btn-primary:hover { box-shadow: 0 6px 30px var(--accent-glow); transform: translateY(-1px); }
   .btn-primary:active { transform: translateY(1px) scale(0.98); }
-  .btn-primary:disabled { opacity: 0.5; pointer-events: none; }
-
   .btn-ghost { width: 100%; padding: 16px; border: 1.5px solid var(--border); border-radius: var(--radius); background: transparent; color: var(--fg-muted); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: var(--transition); }
   .btn-ghost:hover { border-color: var(--fg-dim); color: var(--fg); }
-
   .bottom-actions { margin-top: auto; padding: 20px 0 32px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
 
-  .alarm-screen-content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding-bottom: 40px; }
-  .alarm-ring-visual { position: relative; width: 200px; height: 200px; margin-bottom: 40px; }
-  .ring { position: absolute; border-radius: 50%; border: 2px solid; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-  .ring-1 { width: 120px; height: 120px; border-color: rgba(245,158,11,0.15); animation: ringPulse 2s ease-in-out infinite; }
-  .ring-2 { width: 160px; height: 160px; border-color: rgba(245,158,11,0.1); animation: ringPulse 2s ease-in-out infinite 0.3s; }
-  .ring-3 { width: 200px; height: 200px; border-color: rgba(245,158,11,0.06); animation: ringPulse 2s ease-in-out infinite 0.6s; }
-  @keyframes ringPulse { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 50% { transform: translate(-50%, -50%) scale(1.12); opacity: 0.4; } }
-  .alarm-icon-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: var(--accent-soft); border: 2px solid rgba(245,158,11,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; color: var(--accent); animation: iconBob 1.5s ease-in-out infinite; }
-  @keyframes iconBob { 0%, 100% { transform: translate(-50%, -50%) rotate(0deg); } 25% { transform: translate(-50%, -52%) rotate(8deg); } 75% { transform: translate(-50%, -48%) rotate(-8deg); } }
-  .alarm-time-display { font-family: 'Space Grotesk', sans-serif; font-size: 56px; font-weight: 700; color: var(--fg); margin-bottom: 6px; letter-spacing: -1px; }
-  .alarm-date { font-size: 14px; color: var(--fg-muted); margin-bottom: 8px; }
-  .alarm-note-preview { font-size: 13px; color: var(--fg-dim); max-width: 260px; line-height: 1.5; margin-bottom: 36px; font-style: italic; }
-
-  .awake-btn { width: 200px; height: 200px; border-radius: 50%; border: 3px solid var(--accent); background: radial-gradient(circle at 40% 35%, rgba(245,158,11,0.2), var(--accent-soft) 60%, rgba(245,158,11,0.05)); color: var(--accent); font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; cursor: pointer; position: relative; overflow: hidden; transition: var(--transition); display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.3; }
-  .awake-btn::before { content: ''; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid transparent; border-top-color: var(--accent); animation: awakeSpin 3s linear infinite; opacity: 0.5; }
-  @keyframes awakeSpin { to { transform: rotate(360deg); } }
-  .awake-btn::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, var(--accent-glow), transparent 70%); opacity: 0; transition: opacity 0.4s ease; }
-  .awake-btn:hover { transform: scale(1.06); box-shadow: 0 0 60px var(--accent-glow); }
-  .awake-btn:hover::after { opacity: 1; }
-  .awake-btn:active { transform: scale(0.96); transition-duration: 0.1s; }
-  .awake-btn span { position: relative; z-index: 1; }
-  .awake-sub { font-size: 12px; color: var(--fg-dim); margin-top: 20px; }
-
-  .snooze-bar { margin-top: 24px; display: flex; align-items: center; gap: 12px; }
-  .snooze-track { width: 160px; height: 6px; background: var(--border); border-radius: var(--radius-full); overflow: hidden; }
-  .snooze-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), #FBBF24); border-radius: var(--radius-full); transition: width 0.3s ease; }
-  .snooze-text { font-size: 12px; color: var(--fg-dim); min-width: 60px; }
-
-  .voice-visualizer { display: flex; align-items: center; justify-content: center; gap: 4px; height: 30px; margin-bottom: 10px; opacity: 0; transition: opacity 0.3s; }
-  .voice-visualizer.speaking { opacity: 1; }
-  .v-bar { width: 4px; height: 8px; background: var(--accent); border-radius: 2px; animation: vPulse 0.6s ease-in-out infinite alternate; }
-  .v-bar:nth-child(1) { animation-delay: 0.0s; height: 12px; } .v-bar:nth-child(2) { animation-delay: 0.1s; height: 20px; } .v-bar:nth-child(3) { animation-delay: 0.2s; height: 28px; } .v-bar:nth-child(4) { animation-delay: 0.3s; height: 20px; } .v-bar:nth-child(5) { animation-delay: 0.4s; height: 12px; }
-  @keyframes vPulse { 0% { transform: scaleY(0.4); opacity: 0.4; } 100% { transform: scaleY(1); opacity: 1; } }
-
-  /* SCREEN 4 CHAT UI */
-  .chat-container {
-    flex: 1; display: flex; flex-direction: column; margin-top: 16px; 
-    opacity: 0; transform: translateY(10px); transition: all 0.4s ease;
-    pointer-events: none; overflow: hidden;
-  }
-  .chat-container.active { opacity: 1; transform: translateY(0); pointer-events: all; }
-
-  .chat-history {
-    flex: 1; overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; gap: 16px;
-    margin-bottom: 20px;
-  }
-  .chat-history::-webkit-scrollbar { width: 3px; }
-  .chat-history::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-
-  .chat-bubble {
-    max-width: 85%; padding: 14px 18px; border-radius: 18px; font-size: 14px;
-    line-height: 1.5; animation: bubbleIn 0.3s ease forwards; opacity: 0; transform: translateY(10px);
-  }
-  @keyframes bubbleIn { to { opacity: 1; transform: translateY(0); } }
-
-  .chat-bubble.app {
-    background: var(--bg-card); border: 1px solid var(--border); 
-    align-self: flex-start; border-bottom-left-radius: 4px; color: var(--fg);
-  }
-  .chat-bubble.user {
-    background: linear-gradient(135deg, #F59E0B, #D97706); color: #0A0E1A; font-weight: 500;
-    align-self: flex-end; border-bottom-right-radius: 4px;
-  }
-
-  .mic-container {
-    display: flex; flex-direction: column; align-items: center; padding-bottom: 30px; flex-shrink: 0;
-  }
-  
-  .mic-status { font-size: 12px; color: var(--fg-dim); margin-bottom: 12px; min-height: 18px; letter-spacing: 0.5px; }
-
-  .mic-btn {
-    width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--border);
-    background: var(--bg-card); color: var(--fg-muted); font-size: 28px; cursor: pointer;
-    position: relative; transition: var(--transition); display: flex; align-items: center; justify-content: center;
-  }
-  .mic-btn:hover { border-color: var(--accent); color: var(--accent); transform: scale(1.05); }
-  .mic-btn:disabled { opacity: 0.3; pointer-events: none; }
-  
-  .mic-btn.recording {
-    border-color: var(--danger); color: var(--danger); background: rgba(239, 68, 68, 0.1);
-    animation: micPulse 1.5s ease-in-out infinite;
-  }
-  @keyframes micPulse {
-    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-    70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-  }
-
-  .toast { position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 20px; font-size: 13px; color: var(--fg); opacity: 0; pointer-events: none; transition: all 0.35s ease; z-index: 100; white-space: nowrap; box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .toast i { margin-right: 8px; color: var(--accent); }
-
+  /* --- SCREEN 3 (ALARM CONVERSATION UI) --- */
   .screen-alarm .ambient { opacity: 1; }
   .screen-alarm .ambient .orb-1 { background: radial-gradient(circle, rgba(245,158,11,0.25), transparent 70%); animation-duration: 6s; }
   .screen-alarm .ambient .orb-2 { background: radial-gradient(circle, rgba(239,68,68,0.12), transparent 70%); animation-duration: 4s; }
-  .screen-alarm .ambient .orb-3 { background: radial-gradient(circle, rgba(251,191,36,0.15), transparent 70%); animation-duration: 5s; }
+
+  .alarm-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 16px; flex-shrink: 0; }
+  .alarm-ring-visual { position: relative; width: 120px; height: 120px; margin-bottom: 12px; }
+  .ring { position: absolute; border-radius: 50%; border: 2px solid; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  .ring-1 { width: 80px; height: 80px; border-color: rgba(245,158,11,0.15); animation: ringPulse 2s ease-in-out infinite; }
+  .ring-2 { width: 100px; height: 100px; border-color: rgba(245,158,11,0.1); animation: ringPulse 2s ease-in-out infinite 0.3s; }
+  .ring-3 { width: 120px; height: 120px; border-color: rgba(245,158,11,0.06); animation: ringPulse 2s ease-in-out infinite 0.6s; }
+  @keyframes ringPulse { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 50% { transform: translate(-50%, -50%) scale(1.12); opacity: 0.4; } }
+  .alarm-icon-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: var(--accent-soft); border: 2px solid rgba(245,158,11,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--accent); animation: iconBob 1.5s ease-in-out infinite; }
+  @keyframes iconBob { 0%, 100% { transform: translate(-50%, -50%) rotate(0deg); } 25% { transform: translate(-50%, -52%) rotate(8deg); } 75% { transform: translate(-50%, -48%) rotate(-8deg); } }
+  
+  .alarm-time-display { font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; color: var(--fg); letter-spacing: -1px; }
+
+  .voice-visualizer { display: flex; align-items: center; justify-content: center; gap: 4px; height: 24px; margin-bottom: 8px; opacity: 0; transition: opacity 0.3s; flex-shrink: 0; }
+  .voice-visualizer.speaking { opacity: 1; }
+  .v-bar { width: 3px; height: 8px; background: var(--accent); border-radius: 2px; animation: vPulse 0.6s ease-in-out infinite alternate; }
+  .v-bar:nth-child(1) { animation-delay: 0.0s; height: 12px; } .v-bar:nth-child(2) { animation-delay: 0.1s; height: 20px; } .v-bar:nth-child(3) { animation-delay: 0.2s; height: 24px; } .v-bar:nth-child(4) { animation-delay: 0.3s; height: 20px; } .v-bar:nth-child(5) { animation-delay: 0.4s; height: 12px; }
+  @keyframes vPulse { 0% { transform: scaleY(0.4); opacity: 0.4; } 100% { transform: scaleY(1); opacity: 1; } }
+
+  .chat-area { flex: 1; display: flex; flex-direction: column; background: var(--bg-deep); border-radius: var(--radius); border: 1px solid var(--border); padding: 16px; margin-bottom: 16px; min-height: 0; }
+  .chat-history { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 4px; }
+  .chat-history::-webkit-scrollbar { width: 3px; }
+  .chat-history::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+  .chat-bubble { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.5; animation: bubbleIn 0.3s ease forwards; opacity: 0; transform: translateY(10px); }
+  @keyframes bubbleIn { to { opacity: 1; transform: translateY(0); } }
+  .chat-bubble.app { background: var(--bg-card); border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 4px; }
+  .chat-bubble.user { background: linear-gradient(135deg, #F59E0B, #D97706); color: #0A0E1A; font-weight: 500; align-self: flex-end; border-bottom-right-radius: 4px; }
+
+  .controls-area { flex-shrink: 0; display: flex; flex-direction: column; gap: 12px; padding-bottom: 32px; }
+  
+  .whisper-row { display: flex; gap: 10px; }
+  .whisper-input { flex: 1; background: var(--bg-input); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 14px 16px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--fg); outline: none; transition: var(--transition); }
+  .whisper-input::placeholder { color: var(--fg-dim); font-size: 13px; }
+  .whisper-input:focus { border-color: var(--accent); }
+  .whisper-input:disabled { opacity: 0.4; }
+  
+  .mic-btn-sm { width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--border); background: var(--bg-card); color: var(--fg-muted); font-size: 20px; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .mic-btn-sm:hover { border-color: var(--accent); color: var(--accent); }
+  .mic-btn-sm:disabled { opacity: 0.3; pointer-events: none; }
+  .mic-btn-sm.recording { border-color: var(--danger); color: var(--danger); background: rgba(239, 68, 68, 0.1); animation: micPulse 1.5s ease-in-out infinite; }
+  @keyframes micPulse { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+
+  .stfu-btn { width: 100%; padding: 16px; border: 2px solid var(--danger); border-radius: var(--radius); background: transparent; color: var(--danger); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; transition: var(--transition); letter-spacing: 0.5px; }
+  .stfu-btn:hover { background: rgba(239, 68, 68, 0.1); transform: translateY(-1px); }
+  .stfu-btn:active { transform: scale(0.98); }
+
+  .done-overlay { position: absolute; inset: 0; background: var(--bg-deep); z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; opacity: 0; pointer-events: none; transition: opacity 0.6s ease; }
+  .done-overlay.show { opacity: 1; pointer-events: all; }
+  .done-overlay h2 { font-family: 'Space Grotesk', sans-serif; font-size: 36px; color: var(--fg); margin-bottom: 12px; }
+  .done-overlay p { color: var(--fg-muted); font-size: 15px; max-width: 280px; line-height: 1.5; }
+  .done-icon { font-size: 48px; color: var(--accent); margin-bottom: 24px; animation: iconBob 2s ease-in-out infinite; }
 
   .particles { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
   .particle { position: absolute; width: 3px; height: 3px; background: var(--accent); border-radius: 50%; opacity: 0; animation: particleRise 4s ease-in-out infinite; }
   @keyframes particleRise { 0% { opacity: 0; transform: translateY(0) scale(0); } 20% { opacity: 0.6; } 100% { opacity: 0; transform: translateY(-300px) scale(1); } }
 
-  .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 24px 0; }
-
-  .form-group { opacity: 0; transform: translateY(12px); animation: fadeUp 0.5s ease forwards; }
-  .form-group:nth-child(1) { animation-delay: 0.15s; } .form-group:nth-child(2) { animation-delay: 0.25s; } .form-group:nth-child(3) { animation-delay: 0.35s; } .form-group:nth-child(4) { animation-delay: 0.45s; }
-  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-
-  .info-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--accent-soft); border: 1px solid rgba(245,158,11,0.15); border-radius: var(--radius-full); padding: 8px 14px; font-size: 12px; color: var(--accent); margin-top: 16px; }
-  .info-badge i { font-size: 11px; }
+  .toast { position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 20px; font-size: 13px; color: var(--fg); opacity: 0; pointer-events: none; transition: all 0.35s ease; z-index: 100; white-space: nowrap; box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast i { margin-right: 8px; color: var(--accent); }
 
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
 </style>
@@ -257,9 +167,9 @@
     <!-- SCREEN 1 -->
     <div class="screen active" id="screen1">
       <div class="status-bar"><span class="time" id="statusTime1">9:41</span><div class="status-icons"><i class="fas fa-signal"></i><i class="fas fa-wifi"></i><i class="fas fa-battery-full"></i></div></div>
-      <div class="progress-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <div class="progress-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
       <div class="screen-header">
-        <div class="screen-label">Step 1 of 4</div>
+        <div class="screen-label">Step 1 of 3</div>
         <h1 class="screen-title">Set Up Your<br>Profile</h1>
         <p class="screen-subtitle">We'll personalize your wake-up voice based on who you are.</p>
       </div>
@@ -287,9 +197,9 @@
     <!-- SCREEN 2 -->
     <div class="screen" id="screen2">
       <div class="status-bar"><span class="time" id="statusTime2">9:41</span><div class="status-icons"><i class="fas fa-signal"></i><i class="fas fa-wifi"></i><i class="fas fa-battery-full"></i></div></div>
-      <div class="progress-dots"><div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
+      <div class="progress-dots"><div class="dot"></div><div class="dot active"></div><div class="dot"></div></div>
       <div class="screen-header">
-        <div class="screen-label">Step 2 of 4</div>
+        <div class="screen-label">Step 2 of 3</div>
         <h1 class="screen-title">Set Your<br>Alarm</h1>
         <p class="screen-subtitle">Pick your wake-up time and leave a note for your morning self.</p>
       </div>
@@ -318,8 +228,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="form-label">Night Note</label>
-        <textarea class="text-area" id="noteInput" placeholder="Write something for your morning self..." maxlength="300" oninput="updateCharCount()"></textarea>
+        <label class="form-label">Night Note (Crucial for morning prompt)</label>
+        <textarea class="text-area" id="noteInput" placeholder="e.g., 'Big presentation at 9 AM' or 'Need to pack for the trip'" maxlength="300" oninput="updateCharCount()"></textarea>
         <div class="char-count"><span id="charCount">0</span> / 300</div>
       </div>
       <div class="bottom-actions">
@@ -328,78 +238,59 @@
       </div>
     </div>
 
-    <!-- SCREEN 3 -->
+    <!-- SCREEN 3 (ALARM & CONVERSATION) -->
     <div class="screen screen-alarm" id="screen3">
       <div class="status-bar"><span class="time" id="statusTime3">9:41</span><div class="status-icons"><i class="fas fa-signal"></i><i class="fas fa-wifi"></i><i class="fas fa-battery-full"></i></div></div>
-      <div class="progress-dots"><div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div></div>
-      <div class="alarm-screen-content">
-        <div class="voice-visualizer" id="alarmVoiceVis"><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div></div>
-        <div class="alarm-ring-visual">
+      <div class="progress-dots"><div class="dot"></div><div class="dot"></div><div class="dot active"></div></div>
+      
+      <div class="alarm-header">
+        <div class="alarm-ring-visual" id="alarmVisuals">
           <div class="ring ring-1"></div><div class="ring ring-2"></div><div class="ring ring-3"></div>
           <div class="alarm-icon-center"><i class="fas fa-bell"></i></div>
         </div>
-        <div class="alarm-time-display" id="alarmTimeDisplay">06:30</div>
-        <div class="alarm-date" id="alarmDateDisplay">Thursday, January 16</div>
-        <div class="alarm-note-preview" id="alarmNotePreview">"Your note will appear here..."</div>
-        <button class="awake-btn" onclick="handleAwake()" aria-label="I'm Awake button"><span>I'm<br>Awake</span></button>
-        <div class="awake-sub">Tap to dismiss alarm</div>
-        <div class="snooze-bar">
-          <span class="snooze-text">Auto-snooze</span>
-          <div class="snooze-track"><div class="snooze-fill" id="snoozeFill"></div></div>
-          <span class="snooze-text" id="snoozeTimer">30s</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- SCREEN 4 (Conversational UI) -->
-    <div class="screen screen-alarm" id="screen4">
-      <div class="status-bar"><span class="time" id="statusTime4">9:41</span><div class="status-icons"><i class="fas fa-signal"></i><i class="fas fa-wifi"></i><i class="fas fa-battery-full"></i></div></div>
-      <div class="progress-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div></div>
-      
-      <div class="screen-header" style="margin-top: 10px;">
-        <div class="screen-label">Step 4 of 4</div>
-        <h1 class="screen-title">Morning<br>Reflection</h1>
+        <div class="alarm-time-display" id="alarmTimeDisplay">06:30 AM</div>
       </div>
 
-      <div class="voice-visualizer" id="reflectVoiceVis" style="margin-top: 5px;"><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div></div>
+      <div class="voice-visualizer" id="alarmVoiceVis"><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div></div>
 
-      <div class="chat-container" id="chatContainer">
+      <div class="chat-area" id="chatArea">
         <div class="chat-history" id="chatHistory"></div>
-        
-        <div class="mic-container" id="micContainer">
-          <div class="mic-status" id="micStatus">Waiting...</div>
-          <button class="mic-btn" id="micBtn" onclick="toggleMic()" disabled>
+      </div>
+
+      <div class="controls-area" id="controlsArea">
+        <div class="whisper-row">
+          <input type="text" class="whisper-input" id="whisperInput" placeholder="Type reply instead..." disabled>
+          <button class="mic-btn-sm" id="micBtn" onclick="toggleMic()" disabled>
             <i class="fas fa-microphone"></i>
           </button>
         </div>
+        <button class="stfu-btn" onclick="skipAndTurnOff()">
+          <i class="fas fa-power-off" style="margin-right: 8px;"></i> SKIP & TURN OFF
+        </button>
       </div>
 
-      <div class="bottom-actions" id="finishActions" style="display: none;">
-        <button class="btn-primary" onclick="finishDay()">Start My Day <i class="fas fa-sun" style="margin-left:8px;"></i></button>
+      <!-- Done State Overlay -->
+      <div class="done-overlay" id="doneOverlay">
+        <div class="done-icon"><i class="fas fa-sun"></i></div>
+        <h2>Good Morning</h2>
+        <p>Your alarm has been dismissed. Go get them.</p>
       </div>
     </div>
-
   </div>
+  
   <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastText">Done</span></div>
 </div>
 
 <script>
   let currentScreen = 1;
   let alarmHour = 6; let alarmMinute = 30; let alarmAmPm = 'AM'; let selectedGender = 'male';
-  let snoozeInterval = null; let snoozeSeconds = 30;
+  let userName = "User";
   
-  // Voice & Chat State
-  let voices = []; let targetVoice = null;
+  // Conversation State
+  let alarmPhase = 0; // 0: idle, 1: waiting for user, 2: finishing, 3: done
   let recognition = null;
   let isRecording = false;
-  let chatStep = 0; 
-  let userName = "User";
-
-  const chatFlow = [
-    { prompt: "First, did you have any dreams you remember? Tell me about them.", key: "Dreams" },
-    { prompt: "That's interesting. What are your main goals for today?", key: "Goals" },
-    { prompt: "Noted. And do you have any specific to-dos or errands?", key: "To-Dos" }
-  ];
+  let voices = []; let targetVoice = null;
 
   // --- VOICE SYNTHESIS ---
   function loadVoices() { voices = speechSynthesis.getVoices(); selectTargetVoice(); }
@@ -415,7 +306,7 @@
     targetVoice = found || voices.find(v => v.lang.startsWith('en')) || voices[0];
   }
 
-  function speak(text, visualizerId, callback) {
+  function speak(text, callback) {
     if (!('speechSynthesis' in window)) { if(callback) callback(); return; }
     speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
@@ -423,7 +314,7 @@
     utterance.rate = 0.95;
     utterance.pitch = selectedGender === 'male' ? 1.2 : 0.8;
     
-    const vis = document.getElementById(visualizerId);
+    const vis = document.getElementById('alarmVoiceVis');
     if(vis) vis.classList.add('speaking');
     
     utterance.onend = () => { if(vis) vis.classList.remove('speaking'); if(callback) callback(); };
@@ -439,11 +330,7 @@
   // --- SPEECH RECOGNITION ---
   function initRecognition() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      document.getElementById('micStatus').textContent = "Voice input not supported";
-      document.getElementById('micBtn').style.display = 'none';
-      return false;
-    }
+    if (!SpeechRecognition) return false;
     recognition = new SpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = false;
@@ -451,59 +338,93 @@
 
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
-      addChatBubble(transcript, 'user');
-      processNextStep();
+      submitResponse(transcript);
     };
-
-    recognition.onend = () => {
-      setRecordingUI(false);
-    };
-    
-    recognition.onerror = (event) => {
-      console.log("Speech error", event.error);
-      setRecordingUI(false);
-      if(event.error === 'not-allowed') {
-         document.getElementById('micStatus').textContent = "Mic permission denied";
-      } else {
-         document.getElementById('micStatus').textContent = "Didn't catch that. Tap to retry.";
-      }
-    };
+    recognition.onend = () => { setRecordingUI(false); };
+    recognition.onerror = () => { setRecordingUI(false); };
     return true;
   }
 
   function toggleMic() {
-    if (!recognition) return;
-    if (isRecording) {
-      recognition.stop();
-    } else {
-      try {
-        recognition.start();
-        setRecordingUI(true);
-      } catch(e) {
-        console.error(e);
-      }
-    }
+    if (!recognition || alarmPhase !== 1) return;
+    if (isRecording) { recognition.stop(); } 
+    else { try { recognition.start(); setRecordingUI(true); } catch(e) {} }
   }
 
   function setRecordingUI(state) {
     isRecording = state;
     const btn = document.getElementById('micBtn');
-    const status = document.getElementById('micStatus');
-    if (state) {
-      btn.classList.add('recording');
-      btn.innerHTML = '<i class="fas fa-stop"></i>';
-      status.textContent = "Listening...";
-      status.style.color = "var(--danger)";
-    } else {
-      btn.classList.remove('recording');
-      btn.innerHTML = '<i class="fas fa-microphone"></i>';
-      status.textContent = "Tap to speak";
-      status.style.color = "var(--fg-dim)";
-    }
+    if (state) { btn.classList.add('recording'); btn.innerHTML = '<i class="fas fa-stop"></i>'; }
+    else { btn.classList.remove('recording'); btn.innerHTML = '<i class="fas fa-microphone"></i>'; }
   }
 
-  // --- CHAT LOGIC ---
-  function addChatBubble(text, type) {
+  // --- ALARM LOGIC ---
+  function startAlarmSequence() {
+    selectTargetVoice();
+    alarmPhase = 0;
+    document.getElementById('doneOverlay').classList.remove('show');
+    document.getElementById('chatHistory').innerHTML = '';
+    document.getElementById('whisperInput').value = '';
+    setControlsEnabled(false);
+    
+    const timeStr = `${String(alarmHour).padStart(2, '0')}:${String(alarmMinute).padStart(2, '0')} ${alarmAmPm}`;
+    document.getElementById('alarmTimeDisplay').textContent = timeStr;
+
+    const note = document.getElementById('noteInput').value.trim();
+    userName = document.getElementById('nameInput').value.trim() || 'You';
+
+    let turn1Text = "";
+    if (note) {
+      turn1Text = `${userName}, you noted that you have "${note}" today. What is the very first thing you need to do right now to prepare?`;
+    } else {
+      turn1Text = `Good morning ${userName}. What is the very first thing you need to do today to get started?`;
+    }
+
+    addBubble(turn1Text, 'app');
+    speak(turn1Text, () => {
+      alarmPhase = 1;
+      setControlsEnabled(true);
+      document.getElementById('whisperInput').focus();
+    });
+  }
+
+  function submitResponse(text) {
+    if (alarmPhase !== 1 || !text.trim()) return;
+    alarmPhase = 2;
+    setControlsEnabled(false);
+    if (isRecording && recognition) recognition.stop();
+    
+    addBubble(text.trim(), 'user');
+
+    // Turn 2 Logic: Brief support + Motivational push
+    const shortText = text.trim().length > 40 ? text.trim().substring(0, 40) + "..." : text.trim();
+    const turn2Text = `Got it. Focus on ${shortText}. Take a deep breath and go crush it.`;
+
+    addBubble(turn2Text, 'app');
+    speak(turn2Text, () => {
+      endAlarm();
+    });
+  }
+
+  function skipAndTurnOff() {
+    stopSpeaking();
+    if (isRecording && recognition) recognition.stop();
+    endAlarm();
+  }
+
+  function endAlarm() {
+    alarmPhase = 3;
+    setControlsEnabled(false);
+    document.getElementById('doneOverlay').classList.add('show');
+  }
+
+  function setControlsEnabled(state) {
+    document.getElementById('whisperInput').disabled = !state;
+    document.getElementById('micBtn').disabled = !state;
+    document.getElementById('controlsArea').style.opacity = state ? '1' : '0.4';
+  }
+
+  function addBubble(text, type) {
     const history = document.getElementById('chatHistory');
     const bubble = document.createElement('div');
     bubble.className = `chat-bubble ${type}`;
@@ -512,29 +433,7 @@
     history.scrollTop = history.scrollHeight;
   }
 
-  function processNextStep() {
-    document.getElementById('micBtn').disabled = true;
-    chatStep++;
-    
-    if (chatStep < chatFlow.length) {
-      const nextPrompt = chatFlow[chatStep].prompt;
-      addChatBubble(nextPrompt, 'app');
-      speak(nextPrompt, 'reflectVoiceVis', () => {
-        document.getElementById('micBtn').disabled = false;
-        document.getElementById('micStatus').textContent = "Tap to speak";
-      });
-    } else {
-      // Conversation Over
-      const finalMsg = "Perfect. I've got your thoughts saved. Have a wonderful day!";
-      addChatBubble(finalMsg, 'app');
-      speak(finalMsg, 'reflectVoiceVis', () => {
-        document.getElementById('micContainer').style.display = 'none';
-        document.getElementById('finishActions').style.display = 'flex';
-      });
-    }
-  }
-
-  // --- NAVIGATION & SCREENS ---
+  // --- NAVIGATION & MISC ---
   function goToScreen(target) {
     if (target === 2 && currentScreen === 1) {
       const name = document.getElementById('nameInput').value.trim();
@@ -556,10 +455,11 @@
     currentScreen = target;
 
     if (target === 3) {
-      updateAlarmScreen(); startSnoozeTimer(); generateParticles();
+      generateParticles();
+      initRecognition(); // Prep mic
+      setTimeout(startAlarmSequence, 600); // Start sequence after transition
     } else {
-      stopSnoozeTimer();
-      if(target !== 4) stopSpeaking();
+      stopSpeaking();
     }
   }
 
@@ -586,73 +486,6 @@
   }
   function updateCharCount() { document.getElementById('charCount').textContent = document.getElementById('noteInput').value.length; }
 
-  function updateAlarmScreen() {
-    selectTargetVoice();
-    const timeStr = String(alarmHour).padStart(2, '0') + ':' + String(alarmMinute).padStart(2, '0');
-    document.getElementById('alarmTimeDisplay').textContent = timeStr;
-    const now = new Date();
-    document.getElementById('alarmDateDisplay').textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-    const note = document.getElementById('noteInput').value.trim();
-    userName = document.getElementById('nameInput').value.trim() || 'You';
-    document.getElementById('alarmNotePreview').textContent = note ? `"${note}" — ${userName}'s night note` : `Rise and shine, ${userName}. A new day awaits.`;
-
-    const spokenTime = `${alarmHour}:${String(alarmMinute).padStart(2, '0')} ${alarmAmPm}`;
-    speak(`Good morning ${userName}. It is currently ${spokenTime}. Time to wake up.`, 'alarmVoiceVis');
-  }
-
-  function handleAwake() {
-    stopSnoozeTimer(); stopSpeaking();
-    goToScreen(4);
-    
-    // Reset chat UI
-    document.getElementById('chatHistory').innerHTML = '';
-    document.getElementById('micContainer').style.display = 'flex';
-    document.getElementById('finishActions').style.display = 'none';
-    document.getElementById('micBtn').disabled = true;
-    chatStep = 0;
-
-    // Init Speech Recognition
-    const isSupported = initRecognition();
-
-    // Show chat container and start flow
-    setTimeout(() => {
-      document.getElementById('chatContainer').classList.add('active');
-      if (isSupported) {
-        startConversation();
-      } else {
-        addChatBubble("Voice input isn't supported in this browser. You can review your night note instead!", 'app');
-        document.getElementById('micContainer').style.display = 'none';
-        document.getElementById('finishActions').style.display = 'flex';
-      }
-    }, 500);
-  }
-
-  function startConversation() {
-    const firstPrompt = chatFlow[0].prompt;
-    addChatBubble(firstPrompt, 'app');
-    speak(firstPrompt, 'reflectVoiceVis', () => {
-      document.getElementById('micBtn').disabled = false;
-      document.getElementById('micStatus').textContent = "Tap to speak";
-    });
-  }
-
-  function finishDay() {
-    stopSpeaking();
-    showToast(`Have a wonderful day, ${userName}!`);
-  }
-
-  function startSnoozeTimer() {
-    stopSnoozeTimer(); snoozeSeconds = 30;
-    const fill = document.getElementById('snoozeFill'); const timer = document.getElementById('snoozeTimer');
-    fill.style.width = '0%'; timer.textContent = '30s';
-    snoozeInterval = setInterval(() => {
-      snoozeSeconds--;
-      if (snoozeSeconds <= 0) { stopSnoozeTimer(); showToast('Snooze complete — alarm would re-ring'); snoozeSeconds = 30; fill.style.width = '100%'; timer.textContent = '0s'; return; }
-      fill.style.width = ((30 - snoozeSeconds) / 30) * 100 + '%'; timer.textContent = snoozeSeconds + 's';
-    }, 1000);
-  }
-  function stopSnoozeTimer() { if (snoozeInterval) { clearInterval(snoozeInterval); snoozeInterval = null; } }
-
   function showToast(message) {
     const toast = document.getElementById('toast'); document.getElementById('toastText').textContent = message;
     toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2800);
@@ -675,6 +508,16 @@
     document.querySelectorAll('[id^="statusTime"]').forEach(el => el.textContent = timeStr);
   }
   updateStatusTime(); setInterval(updateStatusTime, 10000);
+
+  // Whisper Input Listener
+  document.getElementById('whisperInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const val = e.target.value;
+      e.target.value = '';
+      submitResponse(val);
+    }
+  });
 
   document.querySelectorAll('.text-input, .text-area').forEach(el => {
     el.addEventListener('focus', () => { const icon = el.parentElement.querySelector('i:first-child'); if(icon) icon.style.color = 'var(--accent)'; });
